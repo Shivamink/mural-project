@@ -7,11 +7,245 @@
 }
 
 #Parent {
-  width: 100%;
-  height: 100%;
+  width: 5760px;
+  height: 1080px;
+  position: relative;
 }
 
 .bg-image {
   width: 100%;
+}
+
+#Airport {
+  width: 100%;
   height: 100%;
+  position: absolute;
+  left: 16%;
+  top: 24%;
+}
+
+.airport-image {
+  width: 28%;
+}
+
+#Building {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 53%;
+  top: 56%;
+}
+
+.building-image {
+  width: 3%;
+}
+
+#Building2 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 11%;
+  left: 63%;
+}
+
+.building2-image {
+  width: 3%;
+}
+
+#Building3 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 45%;
+  top: 46%;
+}
+
+.building3-image {
+  width: 6%;
+}
+
+#IREbuilding {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 63%;
+  left: 39%;
+}
+
+.IREbuilding-image {
+  width: 6%;
+}
+
+#TMTbuilding {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 22%;
+  left: 34%;
+}
+
+.TMTbuilding-image {
+  width: 4.7%;
+}
+
+#CMhospital {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 40%;
+  left: 66%;
+}
+
+.CMhospital-image {
+  width: 4%;
+}
+
+#CMmall {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 47%;
+  left: 56.8%;
+}
+
+.CMmall-image {
+  width: 13%;
+}
+
+#EDTech {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 11%;
+  left: 65%;
+}
+
+.EDTech-image {
+  width: 11.5%;
+}
+
+#ESGelectric {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 30%;
+  left: 72%;
+}
+
+.ESGelectric-image {
+  width: 6%;
+}
+
+#FSbank {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 27%;
+  left: 35.5%;
+}
+
+.FSbank-image {
+  width: 4%;
+}
+
+#SLBCcoal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: -0.5%;
+}
+
+.SLBCcoal-image {
+  width: 25%;
+}
+
+#IREdock {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 46%;
+}
+
+.IREdock-image {
+  width: 18.4%;
+}
+
+#SLBCbuilding {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 37%;
+  top: 0;
+}
+
+.SLBCbuilding-image {
+  width: 11%;
+}
+
+#SLRAgovernment {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 49%;
+  top: 7%;
+}
+
+.SLRAgovernment-image {
+  width: 6.5%;
+}
+
+#SLRAhole {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 45%;
+  left: 39%;
+}
+
+.SLRAhole-image {
+  width: 4%;
+}
+
+#IMAbuilding {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 44%;
+  left: 50%;
+}
+
+.IMAbuilding-image {
+  width: 3%;
+}
+
+#TMTDrone {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 44%;
+  left: 60.8%;
+}
+
+.TMTDrone-image {
+  width: 2%;
+}
+
+#TMTMovieposter {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 72%;
+  left: 74%;
+}
+
+.TMTMovieposter-image {
+  width: 2%;
+}
+
+#TMTMovieposter2 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 72%;
+  left: 91%;
 }
