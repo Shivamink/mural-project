@@ -140,12 +140,12 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  top: 27%;
-  left: 35.5%;
+  top: 30%;
+  left: 36.5%;
 }
 
 .FSbank-image {
-  width: 4%;
+  width: 3%;
 }
 
 #SLBCcoal {
@@ -248,4 +248,96 @@
   position: absolute;
   top: 72%;
   left: 91%;
+}
+
+#TMTStadium {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 41%;
+  left: 55%;
+}
+
+.TMTStadium-image {
+  width: 6%;
+}
+
+#Mobileqr {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 33%;
+  left: 28%;
+}
+
+.Mobileqr-image {
+  width: 2%;
+}
+
+.backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+#primary {
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+  position: absolute;
+  top: -1%;
+  z-index: 1;
+}
+
+.primary-btn {
+  width: 3vw;
+  height: 5vh;
+  border: none;
+  background: transparent;
+  margin-bottom: 1vh;
+}
+
+.primary-btnimage {
+  width: 3.5vw;
+  height: 5vh;
+}
+
+#service {
+  display: flex;
+  margin-right: 15px;
+  position: absolute;
+  z-index: 1;
+  top: 91%;
+}
+
+.service-btn {
+  width: 3vw;
+  height: 5vh;
+  border: none;
+  background: transparent;
+  margin-left: 1vw;
+}
+
+.service-btnimage {
+  width: 3.5vw;
+  height: 3vh;
+}
+
+.childbtns {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 62%;
+  left: 31%;
+  z-index: 1;
+}
+
+.childbtn {
+  width: 2vw;
+  height: 2vh;
+  margin: 3px;
 }
