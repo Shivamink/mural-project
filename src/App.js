@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect, createRef } from "react";
+import axios from "axios";
 
 import Ground from "./Assets/Ground.png";
 import Airport from "./Assets/Airport.png";
@@ -38,194 +39,290 @@ import OneMA from "./Assets/One M&A.png";
 import ManagedServices from "./Assets/Managed Services.png";
 import Tax from "./Assets/Tax.png";
 import EnvironmentGovernance from "./Assets/Environment, Social and Governance.png";
+import ESGtrees1 from "./Assets/ESG trees 1.png";
+import ESGTree2 from "./Assets/ESG Tree 2.png";
+import ESGtree3 from "./Assets/ESG tree 3.png";
+
+const completemap = {
+  sector1: ["CMhospital", "EDTech"],
+  sector2: [],
+  sector3: ["FSbank"],
+  sector4: [],
+  sector5: ["IREdock", "IREbuilding"],
+  sector6: ["IMAbuilding"],
+  sector7: [
+    "TMTbuilding",
+    "EDTech",
+    "TMTStadium",
+    "Mobileqr",
+    "SLRAhole",
+    "TMTDrone",
+    "TMTMovieposter",
+  ],
+  service1: ["SLBCcoal", "SLBCbuilding", "Mobileqr"],
+  service2: ["Mobileqr"],
+  service3: ["SLRAhole", "SLRAgovernment"],
+  service4: [],
+  service5: [],
+  service6: [],
+  service7: [],
+  service8: ["ESGelectric", "ESGtree3"],
+  service9: [],
+};
 
 function App() {
-  const [isActive, setActive] = useState(false);
-  const [child, Setchild] = useState(false);
+  const [activeGroup, setActiveGroup] = useState({ prev: null, current: null });
+  const [activeHotspot, setActiveHotspot] = useState({
+    prev: null,
+    current: null,
+  });
 
-  const [prevHotspotId, setPrevHotspotId] = useState(null);
-  const [currentHotspotId, setCurrentHotspotId] = useState(null);
+  /**
+   * @type{React.RefObject<HTMLDivElement>}
+   */
+  const backdropRef = createRef(null);
 
-  // const [airport, setairport] = useState(false);
-  // const [tmtStadium, setmtStadium] = useState(false);
-  // const [cmhospital, setcmhospital] = useState(false);
-  // const [edTech, setedTech] = useState(false);
-  // const [fsbank, setfsbank] = useState(false);
-  // const [iredock, setiredock] = useState(false);
-  // const [irebuilding, setirebuilding] = useState(false);
+  useEffect(() => {
+    // axios
+    //   .post("https://experientialetc.com/KPMG-test/fetchMuralHotspotApi.php")
+    //   .then(function (x) {
+    //     console.log(x);
+    //   })
+    //   .catch(function (err) {
+    //     console.log(err);
+    //   });
+  }, []);
 
-  function handleblur(event) {
-    // setActive(!isActive);
-    setActive(true);
-    // console.log(event.target.id);
-  }
+  // Group Handler
+  useEffect(() => {
+    if (activeGroup.current === null) return;
+    console.log(activeGroup);
 
-  // function cm(event) {
-  //   console.log(event.target);
-  //   setcmhospital(true);
-  //   setedTech(true);
-  //   setfsbank(false);
-  // }
+    if (activeGroup.current && backdropRef)
+      backdropRef.current.style.zIndex = 0;
 
-  // function fs() {
-  //   setcmhospital(false);
-  //   setedTech(false);
-  //   setfsbank(true);
-  // }
-
-  // function re() {
-  //   setcmhospital(false);
-  //   setedTech(false);
-  //   setfsbank(false);
-  //   setiredock(true);
-  //   setirebuilding(true);
-  // }
-
-  function showbutton() {
-    Setchild(!child);
-  }
-
-  function tmtdisplay() {
-    console.log("hello");
-  }
-
-  let completemap = {
-    sector1: ["CMhospital", "EDTech"],
-    sector2: [""],
-    sector3: ["FSbank"],
-    sector4: [""],
-    sector5: ["IREdock", "IREbuilding"],
-    sector6: ["IMAbuilding"],
-    sector7: [
-      "TMTbuilding",
-      "EDTech",
-      "TMTStadium",
-      "Mobileqr",
-      "SLRAhole",
-      "TMTDrone",
-      "TMTMovieposter",
-    ],
-    service1: ["SLBCcoal", "SLBCbuilding", "Mobileqr"],
-    service2: ["Mobileqr"],
-    service3: ["SLRAhole", "SLRAgovernment"],
-    service4: [""],
-    service5: [""],
-    service6: [""],
-    service7: [""],
-    service8: ["ESGelectric"],
-    service9: [""],
-  };
-
-  function enablegroup(event) {
-    setPrevHotspotId(currentHotspotId);
-    setCurrentHotspotId(event.target.id);
-    console.log({ currentHotspotId, prevHotspotId });
-
-    /**
-     * @type {string[]}
-     */
-    const currentHotspot = completemap[currentHotspotId];
-    if (currentHotspot) {
-      currentHotspot.forEach((h) => {
+    const currentGroup = completemap[activeGroup.current];
+    if (currentGroup) {
+      currentGroup.forEach((h) => {
         document.getElementById(h).style.zIndex = 1;
       });
     }
 
-    /**
-     * @type {string[]}
-     */
-    const prevHotspot = completemap[prevHotspotId];
-    if (prevHotspot) {
-      prevHotspot.forEach((h) => {
+    if (activeGroup.current === activeGroup.prev) return;
+
+    const prevGroup = completemap[activeGroup.prev];
+    if (prevGroup) {
+      prevGroup.forEach((h) => {
         document.getElementById(h).style.zIndex = 0;
       });
     }
+  }, [activeGroup]);
+
+  // Hotspot Handler
+  useEffect(() => {
+    if (activeHotspot.current === null) return;
+    console.log(activeHotspot);
+
+    if (activeGroup.current) {
+      const currentGroup = completemap[activeGroup.current];
+      currentGroup.forEach((h) => {
+        if (h === activeHotspot.current) return;
+        document.getElementById(h).style.zIndex = 0;
+      });
+    } else {
+      document.getElementById(activeHotspot.current).style.zIndex = 1;
+      backdropRef.current.style.zIndex = 0;
+    }
+  }, [activeHotspot]);
+
+  function enablegroup(event) {
+    console.log("Clicked on Group: ", event.target.id);
+    setActiveGroup((state) => ({
+      prev: state.current,
+      current: event.target.id,
+    }));
   }
 
-  // let roughArray = [];
-  // const [stateKey, setStateKey] = useState("sector1");
-  // for (let key in completemap) {
-  //   if (key === stateKey) {
-  //     roughArray.push(completemap[key]);
-  //     console.log(completemap[key]);
-  //   }
-  // }
+  function individualitem(event) {
+    console.log("Clicked on Hotspot: ", event.target.id);
+    setActiveHotspot((state) => ({
+      prev: state.current,
+      current: event.target.id,
+    }));
+  }
 
-  // const getSectorName = () => {
-  //   return roughArray;
-  // };
-  // console.log(getSectorName());
+  function reset() {
+    const hostspots = document.getElementsByClassName("hotspot");
+    for (let i = 0; i < hostspots.length; i++) {
+      hostspots.item(i).style.zIndex = 0;
+    }
+    backdropRef.current.style.zIndex = -1;
+    setActiveGroup((state) => ({
+      prev: state.current,
+      current: null,
+    }));
+    setActiveHotspot((state) => ({
+      prev: state.current,
+      current: null,
+    }));
+  }
+
   return (
     <div className="App">
-      <div id="Parent" onClick={handleblur}>
+      <div id="Parent">
         <img className="bg-image" src={Ground} />
-        <div className={isActive ? "backdrop" : ""}></div>
-        <div id="Airport">
-          <img className="airport-image" src={Airport} />
-        </div>
-        <div id="Building">
-          <img className="building-image" src={Building} />
-        </div>
-        <div id="Building2">
-          <img className="building2-image" src={Building2} />
-        </div>
-        <div id="Building3">
-          <img className="building3-image" src={Building3} />
-        </div>
-        <div id="IREbuilding">
-          <img className="IREbuilding-image" src={IREbuildings} />
-        </div>
-        <div id="TMTbuilding" onClick={showbutton}>
-          <img className="TMTbuilding-image" src={TMTbuilding} />
-        </div>
-        <div id="CMhospital">
-          <img className="CMhospital-image" src={CMhospital} />
-        </div>
-        <div id="CMmall">
-          <img className="CMmall-image" src={CMmall} />
-        </div>
-        <div id="EDTech">
-          <img className="EDTech-image" src={EDTech} />
-        </div>
-        <div id="ESGelectric">
-          <img className="ESGelectric-image" src={ESGelectric} />
-        </div>
-        <div id="FSbank">
-          <img className="FSbank-image" src={FSbank} />
-        </div>
-        <div id="SLBCcoal">
-          <img className="SLBCcoal-image" src={SLBCcoal} />
-        </div>
-        <div id="IREdock">
-          <img className="IREdock-image" src={IREdock} />
-        </div>
-        <div id="SLBCbuilding">
-          <img className="SLBCbuilding-image" src={SLBCbuilding} />
-        </div>
-        <div id="SLRAgovernment">
-          <img className="SLRAgovernment-image" src={SLRAgovernment} />
-        </div>
-        <div id="SLRAhole">
-          <img className="SLRAhole-image" src={SLRAhole} />
-        </div>
-        <div id="IMAbuilding">
-          <img className="IMAbuilding-image" src={IMAbuilding} />
-        </div>
-        <div id="TMTDrone">
-          <img className="TMTDrone-image" src={TMTDrone} />
-        </div>
-        <div id="TMTMovieposter">
-          <img className="TMTMovieposter-image" src={TMTMovieposter} />
-        </div>
-        <div id="TMTMovieposter2">
-          <img className="TMTMovieposter-image" src={TMTMovieposter} />
-        </div>
-        <div id="TMTStadium">
-          <img className="TMTStadium-image" src={TMTStadium} />
-        </div>
-        <div id="Mobileqr">
-          <img className="Mobileqr-image" src={Mobileqr} />
-        </div>
+        {/* <div className={isActive ? "backdrop" : ""}></div>
+        <div className={isActive2 ? "backdrop2" : ""}></div> */}
+        <img
+          className="hotspot airport-image"
+          id="Airport"
+          src={Airport}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot building-image"
+          id="Building"
+          src={Building}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot building2-image"
+          id="Building2"
+          src={Building2}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot building3-image"
+          id="Building3"
+          src={Building3}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot IREbuilding-image"
+          id="IREbuilding"
+          src={IREbuildings}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot TMTbuilding-image"
+          id="TMTbuilding"
+          src={TMTbuilding}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot CMhospital-image"
+          id="CMhospital"
+          src={CMhospital}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot CMmall-image"
+          id="CMmall"
+          src={CMmall}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot EDTech-image"
+          id="EDTech"
+          src={EDTech}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot ESGelectric-image"
+          id="ESGelectric"
+          src={ESGelectric}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot FSbank-image"
+          id="FSbank"
+          src={FSbank}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot SLBCcoal-image"
+          id="SLBCcoal"
+          src={SLBCcoal}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot IREdock-image"
+          id="IREdock"
+          src={IREdock}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot SLBCbuilding-image"
+          id="SLBCbuilding"
+          src={SLBCbuilding}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot SLRAgovernment-image"
+          id="SLRAgovernment"
+          src={SLRAgovernment}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot SLRAhole-image"
+          id="SLRAhole"
+          src={SLRAhole}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot IMAbuilding-image"
+          id="IMAbuilding"
+          src={IMAbuilding}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot TMTDrone-image"
+          id="TMTDrone"
+          src={TMTDrone}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot TMTMovieposter-image"
+          id="TMTMovieposter"
+          src={TMTMovieposter}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot TMTMovieposter-image2"
+          id="TMTMovieposter2"
+          src={TMTMovieposter}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot TMTStadium-image"
+          id="TMTStadium"
+          src={TMTStadium}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot Mobileqr-image"
+          id="Mobileqr"
+          src={Mobileqr}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot ESGtrees1"
+          id="ESGtrees1"
+          src={ESGtrees1}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot ESGTree2"
+          id="ESGTree2"
+          src={ESGTree2}
+          onClick={individualitem}
+        />
+        <img
+          className="hotspot ESGtree3"
+          id="ESGtree3"
+          src={ESGtree3}
+          onClick={individualitem}
+        />
         <div id="primary">
           <button className="primary-btn" onClick={enablegroup}>
             <img
@@ -330,14 +427,15 @@ function App() {
             />
           </button>
         </div>
-        <div
+        {/* <div
           className="childbtns"
           style={child ? { display: "flex" } : { display: "none" }}
         >
           <button className="childbtn">Image</button>
           <button className="childbtn">Video</button>
           <button className="childbtn">PDF</button>
-        </div>
+        </div> */}
+        <div id="backdrop" ref={backdropRef} onClick={reset}></div>
       </div>
     </div>
   );

@@ -16,265 +16,202 @@
   width: 100%;
 }
 
-#Airport {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 16%;
-  top: 24%;
-}
-
 .airport-image {
   width: 28%;
-}
-
-#Building {
-  width: 100%;
-  height: 100%;
   position: absolute;
-  left: 53%;
-  top: 56%;
+  top: 24%;
+  left: 16%;
 }
 
 .building-image {
   width: 3%;
-}
-
-#Building2 {
-  width: 100%;
-  height: 100%;
   position: absolute;
-  top: 11%;
-  left: 63%;
+  top: 56%;
+  left: 54%;
 }
 
 .building2-image {
   width: 3%;
-}
-
-#Building3 {
-  width: 100%;
-  height: 100%;
   position: absolute;
-  left: 45%;
-  top: 46%;
+  top: 12%;
+  left: 63%;
 }
 
 .building3-image {
   width: 6%;
-}
-
-#IREbuilding {
-  width: 100%;
-  height: 100%;
   position: absolute;
-  top: 63%;
-  left: 39%;
+  top: 43%;
+  left: 46%;
 }
 
 .IREbuilding-image {
-  width: 6%;
-}
-
-#TMTbuilding {
-  width: 100%;
-  height: 100%;
   position: absolute;
-  top: 22%;
-  left: 34%;
+  width: 6%;
+  top: 65%;
+  left: 38%;
 }
 
 .TMTbuilding-image {
-  width: 4.7%;
-}
-
-#CMhospital {
-  width: 100%;
-  height: 100%;
+  width: 3.7%;
   position: absolute;
-  top: 40%;
-  left: 66%;
+  top: 32%;
+  left: 34%;
 }
 
 .CMhospital-image {
   width: 4%;
-}
-
-#CMmall {
-  width: 100%;
-  height: 100%;
   position: absolute;
-  top: 47%;
-  left: 56.8%;
+  top: 37%;
+  left: 66%;
 }
 
 .CMmall-image {
   width: 13%;
-}
-
-#EDTech {
-  width: 100%;
-  height: 100%;
   position: absolute;
-  top: 11%;
-  left: 65%;
+  top: 47%;
+  left: 57%;
 }
 
 .EDTech-image {
-  width: 11.5%;
-}
-
-#ESGelectric {
-  width: 100%;
-  height: 100%;
+  width: 11%;
   position: absolute;
-  top: 30%;
-  left: 72%;
+  top: 11%;
+  left: 65.5%;
 }
 
 .ESGelectric-image {
   width: 6%;
+  position: absolute;
+  top: 29%;
+  left: 73%;
 }
 
-#FSbank {
-  width: 100%;
-  height: 100%;
+.FSbank-image {
+  width: 3%;
   position: absolute;
   top: 30%;
   left: 36.5%;
 }
 
-.FSbank-image {
-  width: 3%;
-}
-
-#SLBCcoal {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: -0.5%;
-}
-
 .SLBCcoal-image {
   width: 25%;
-}
-
-#IREdock {
-  width: 100%;
-  height: 100%;
   position: absolute;
-  top: 46%;
+  top: 0%;
+  left: 0%;
 }
 
 .IREdock-image {
   width: 18.4%;
-}
-
-#SLBCbuilding {
-  width: 100%;
-  height: 100%;
   position: absolute;
-  left: 37%;
-  top: 0;
+  top: 46%;
+  left: 0%;
 }
 
 .SLBCbuilding-image {
   width: 11%;
-}
-
-#SLRAgovernment {
-  width: 100%;
-  height: 100%;
   position: absolute;
-  left: 49%;
-  top: 7%;
+  top: 0%;
+  left: 37%;
 }
 
 .SLRAgovernment-image {
   width: 6.5%;
-}
-
-#SLRAhole {
-  width: 100%;
-  height: 100%;
   position: absolute;
-  top: 45%;
-  left: 39%;
+  top: 9%;
+  left: 49%;
 }
 
 .SLRAhole-image {
-  width: 4%;
-}
-
-#IMAbuilding {
-  width: 100%;
-  height: 100%;
+  width: 3%;
   position: absolute;
-  top: 44%;
-  left: 50%;
+  top: 52%;
+  left: 39%;
 }
 
 .IMAbuilding-image {
   width: 3%;
-}
-
-#TMTDrone {
-  width: 100%;
-  height: 100%;
   position: absolute;
   top: 44%;
-  left: 60.8%;
+  left: 50.5%;
 }
 
 .TMTDrone-image {
   width: 2%;
-}
-
-#TMTMovieposter {
-  width: 100%;
-  height: 100%;
   position: absolute;
-  top: 72%;
-  left: 74%;
+  top: 44%;
+  left: 61%;
 }
 
 .TMTMovieposter-image {
   width: 2%;
-}
-
-#TMTMovieposter2 {
-  width: 100%;
-  height: 100%;
   position: absolute;
   top: 72%;
-  left: 91%;
+  left: 74.5%;
 }
 
-#TMTStadium {
-  width: 100%;
-  height: 100%;
+.TMTMovieposter-image2 {
+  width: 2%;
+  position: absolute;
+  top: 72%;
+  left: 93.5%;
+}
+
+.TMTStadium-image {
+  width: 5.5%;
   position: absolute;
   top: 41%;
   left: 55%;
 }
 
-.TMTStadium-image {
-  width: 6%;
-}
-
-#Mobileqr {
-  width: 100%;
-  height: 100%;
+.Mobileqr-image {
+  width: 2%;
   position: absolute;
   top: 33%;
   left: 28%;
 }
 
-.Mobileqr-image {
+.ESGtrees1 {
+  width: 17%;
+  position: absolute;
+  top: 79%;
+  left: 43%;
+}
+
+.ESGTree2 {
   width: 2%;
+  position: absolute;
+  top: 77%;
+  left: 52%;
+}
+
+.ESGtree3 {
+  width: 10%;
+  position: absolute;
+  top: 38%;
+  left: 37%;
+}
+
+#backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.backdrop2 {
   position: absolute;
   top: 0;
   right: 0;
@@ -289,13 +226,13 @@
   flex-direction: column;
   margin: 15px;
   position: absolute;
-  top: -1%;
+  top: 3%;
   z-index: 1;
 }
 
 .primary-btn {
   width: 3vw;
-  height: 5vh;
+  height: 11vh;
   border: none;
   background: transparent;
   margin-bottom: 1vh;
@@ -312,6 +249,7 @@
   position: absolute;
   z-index: 1;
   top: 91%;
+  left: 0%;
 }
 
 .service-btn {
@@ -331,7 +269,7 @@
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 62%;
+  top: 48%;
   left: 31%;
   z-index: 1;
 }
@@ -340,4 +278,8 @@
   width: 2vw;
   height: 2vh;
   margin: 3px;
+}
+
+.hotspot {
+  z-index: 0;
 }
