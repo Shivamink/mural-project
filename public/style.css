@@ -198,7 +198,7 @@
   bottom: 0;
   left: 0;
   z-index: -1;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .backdrop {
@@ -208,7 +208,7 @@
   bottom: 0;
   left: 0;
   z-index: 1;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .backdrop2 {
@@ -218,7 +218,7 @@
   bottom: 0;
   left: 0;
   z-index: 1;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0);
 }
 
 #primary {
@@ -265,16 +265,14 @@
   height: 3vh;
 }
 
-.childbtns {
+.modalbtns {
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 48%;
-  left: 31%;
   z-index: 1;
 }
 
-.childbtn {
+.modalbtn {
   width: 2vw;
   height: 2vh;
   margin: 3px;
@@ -282,4 +280,33 @@
 
 .hotspot {
   z-index: 0;
+}
+
+#video-container {
+  width: 20vw;
+  height: 60vh;
+  overflow: scroll;
+  overflow-y: scroll;
+  position: absolute;
+  z-index: 1;
+  top: 10%;
+  left: 40%;
+}
+
+.individualvideo {
+  width: 100%;
+  height: auto;
+}
+
+#text-container {
+  width: 20vw;
+  height: 60vh;
+  overflow: scroll;
+  overflow-y: scroll;
+  position: absolute;
+  z-index: 1;
+  top: 10%;
+  left: 40%;
+  border: 1px solid red;
+  background-color: white;
 }

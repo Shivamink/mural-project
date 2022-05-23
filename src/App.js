@@ -76,21 +76,30 @@ function App() {
     prev: null,
     current: null,
   });
+  const [content, setContent] = useState([]);
+  const [videoarr, setVideoarr] = useState([]);
+  const [textarr, setTextarr] = useState([]);
+  //Show hide content state
+  const [modalbtn, setModalbtn] = useState(false);
+  const [videomodal, setVideomodal] = useState(false);
+  const [textmodal, setTextmodal] = useState(false);
 
   /**
    * @type{React.RefObject<HTMLDivElement>}
    */
   const backdropRef = createRef(null);
+  let buttons = createRef(null);
 
   useEffect(() => {
-    // axios
-    //   .post("https://experientialetc.com/KPMG-test/fetchMuralHotspotApi.php")
-    //   .then(function (x) {
-    //     console.log(x);
-    //   })
-    //   .catch(function (err) {
-    //     console.log(err);
-    //   });
+    const fetchProducts = async () => {
+      const res = await fetch(
+        "https://experientialetc.com/KPMG-test/fetchMuralHotspotApi.php"
+      );
+      const data = await res.json();
+      console.log(data);
+      setContent(data.mural_hotspot);
+    };
+    fetchProducts();
   }, []);
 
   // Group Handler
@@ -149,6 +158,34 @@ function App() {
       prev: state.current,
       current: event.target.id,
     }));
+
+    const video = content.filter(
+      (video) => video.hotspot_label == event.target.id
+    );
+    video.map((v) => console.log(v.content_url, v.content_type));
+    setVideoarr(video);
+
+    let itemval = document.getElementById(event.target.id);
+    let itemin = itemval.getBoundingClientRect();
+    console.log(itemin.top, itemin.left);
+    let button = buttons.current;
+
+    button.style.top = `${itemin.top.toFixed()}px`;
+    button.style.left = `${itemin.left.toFixed() - 200}px`;
+    if (itemin.left == 0 || itemin.top == 259.1964416503906) {
+      console.log("fix");
+      button.style.top = `${500}px`;
+      button.style.left = `${1000}px`;
+    }
+    setModalbtn(true);
+  }
+
+  function videomodalfnc() {
+    setVideomodal(true);
+  }
+
+  function textmodalfnc() {
+    setTextmodal(true);
   }
 
   function reset() {
@@ -165,6 +202,11 @@ function App() {
       prev: state.current,
       current: null,
     }));
+
+    console.log(videoarr, "videoarr");
+    setModalbtn(false);
+    setVideomodal(false);
+    setTextmodal(false);
   }
 
   return (
@@ -427,14 +469,36 @@ function App() {
             />
           </button>
         </div>
-        {/* <div
-          className="childbtns"
-          style={child ? { display: "flex" } : { display: "none" }}
+        <div
+          className="modalbtns"
+          ref={buttons}
+          style={modalbtn ? { opacity: 1 } : { opacity: 0 }}
         >
-          <button className="childbtn">Image</button>
-          <button className="childbtn">Video</button>
-          <button className="childbtn">PDF</button>
-        </div> */}
+          <button className="modalbtn" onClick={textmodalfnc}>
+            Text
+          </button>
+          <button className="modalbtn" onClick={videomodalfnc}>
+            Video
+          </button>
+          <button className="modalbtn">PDF</button>
+        </div>
+        <div
+          id="video-container"
+          style={videomodal ? { display: "block" } : { display: "none" }}
+        >
+          {videoarr.map((v) => (
+            <video
+              className="individualvideo"
+              key={v.content_url}
+              src={v.content_url}
+              controls
+            ></video>
+          ))}
+        </div>
+        <div
+          id="text-container"
+          style={textmodal ? { display: "block" } : { display: "none" }}
+        ></div>
         <div id="backdrop" ref={backdropRef} onClick={reset}></div>
       </div>
     </div>
