@@ -1,12 +1,7 @@
 import { useState, useEffect, createRef, useRef } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-// import "swiper/css/bundle";
-import { Autoplay, Navigation } from "swiper";
-// import { Document, Page } from "react-pdf";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
+import Carousel from "./Carousel.jsx";
 
+//#region <Asset Imports>
 import Ground from "./Assets/Ground.png";
 import Airport from "./Assets/Airport.png";
 import Building from "./Assets/Building.png";
@@ -50,6 +45,7 @@ import ESGTree2 from "./Assets/ESG Tree 2.png";
 import ESGtree3 from "./Assets/ESG tree 3.png";
 import Damwater from "./Assets/Dam water.webm";
 import Boat from "./Assets/Boat.webm";
+//#endregion
 
 const completemap = {
   sector1: ["CMhospital", "EDTech"],
@@ -84,73 +80,50 @@ function App() {
     prev: null,
     current: null,
   });
-  const [content, setContent] = useState([]);
-  const [videoarr, setVideoarr] = useState([]);
-  const [textarr, setTextarr] = useState([]);
-  const [imgarr, setImgarr] = useState([]);
-  const [pdfarr, setPdfarr] = useState([]);
+  const [content, setContent] = useState({});
   //Show hide content state
   const [modalbtn, setModalbtn] = useState(false);
-  const [videomodal, setVideomodal] = useState(false);
-  const [textmodal, setTextmodal] = useState(false);
-  const [imgmodal, setImgmodal] = useState(false);
-  const [pdfmodal, setPdfmodal] = useState(false);
-  //pdf state
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
+  const [infoModal, setInfoModal] = useState(null);
 
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-  }
   /**
    * @type{React.RefObject<HTMLDivElement>}
    */
   const backdropRef = createRef(null);
   let buttons = createRef(null);
 
-  useEffect(() => {}, []);
-
-  let currentSlide = 0;
-
-  let SlidesRef = useRef(null);
-
-  let businessSlides;
-
-  let gotoSlide = (n) => {
-    businessSlides = document.querySelectorAll(".slides slide");
-    businessSlides[currentSlide].className = "slide showing";
-    businessSlides[currentSlide].className = "slide";
-    currentSlide = (n + businessSlides.length) % businessSlides.length;
-    businessSlides[currentSlide].className = "slide showing";
-
-    for (let i = 0; i < businessSlides.length; i++) {
-      const element = businessSlides[i];
-      if (i > currentSlide && i <= businessSlides.length - 1) {
-        element.className = "slide next";
-      } else if (i < currentSlide && i >= 0) {
-        element.className = "slide previous";
-      }
-    }
-  };
-
-  const previousSlide = () => {
-    gotoSlide(currentSlide - 1);
-  };
-
-  const nextSlide = () => {
-    gotoSlide(currentSlide + 1);
-  };
-
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchData = async () => {
       const res = await fetch(
         "https://experientialetc.com/KPMG-test/fetchMuralHotspotApi.php"
       );
-      const data = await res.json();
-      console.log(data);
-      setContent(data.mural_hotspot);
+      const json = await res.json();
+      /**
+       * @type {{
+       * content_type: string,
+       * content_url: string,
+       * hotspot_label: string
+       * }[]}
+       */
+      const muralHotspot = json.mural_hotspot;
+      let formattedData = {};
+      muralHotspot.forEach((hotspot) => {
+        if (!formattedData[hotspot.hotspot_label]) {
+          formattedData[hotspot.hotspot_label] = {
+            video: [],
+            image: [],
+            text: [],
+            pdf: [],
+          };
+        }
+        formattedData[hotspot.hotspot_label][hotspot.content_type].push(
+          hotspot.content_url
+        );
+      });
+      console.log(formattedData);
+      setContent(formattedData);
     };
-    fetchProducts();
+
+    fetchData();
   }, []);
 
   // Group Handler
@@ -210,33 +183,6 @@ function App() {
       current: event.target.id,
     }));
 
-    const video = content.filter(
-      (video) => video.hotspot_label == event.target.id
-    );
-    video.map((v) => console.log(v.content_url, v.content_type));
-    setVideoarr(video);
-
-    let valuess = content.filter(
-      (random) =>
-        random.content_type == "text" && random.hotspot_label == event.target.id
-    );
-    console.log(valuess, "gfhgfhgjhgj");
-    valuess.map((t) => console.log(t.content_url));
-    setTextarr(valuess);
-
-    let images = content.filter(
-      (img) =>
-        img.content_type == "image" && img.hotspot_label == event.target.id
-    );
-    images.map((i) => console.log(i.content_url));
-    setImgarr(images);
-
-    let pdfs = content.filter(
-      (pdf) => pdf.content_type == "pdf" && pdf.hotspot_label == event.target.id
-    );
-    pdfs.map((p) => console.log(p.content_url, "pdffffffffff"));
-    setPdfarr(pdfs);
-
     let itemval = document.getElementById(event.target.id);
     let itemin = itemval.getBoundingClientRect();
     console.log(itemin.top, itemin.left);
@@ -250,22 +196,6 @@ function App() {
       button.style.left = `${1000}px`;
     }
     setModalbtn(true);
-  }
-
-  function videomodalfnc() {
-    setVideomodal(true);
-  }
-
-  function textmodalfnc() {
-    setTextmodal(true);
-  }
-
-  function imagemodalfnc() {
-    setImgmodal(true);
-  }
-
-  function pdfmodalfnc() {
-    setPdfmodal(true);
   }
 
   function reset() {
@@ -283,13 +213,13 @@ function App() {
       current: null,
     }));
 
-    console.log(videoarr, "videoarr");
     setModalbtn(false);
-    setVideomodal(false);
-    setTextmodal(false);
-    setImgmodal(false);
-    setPdfmodal(false);
   }
+
+  const backdropClickHandler = () => {
+    setInfoModal(null);
+    console.log("Backdrop clicked");
+  };
 
   return (
     <div className="App">
@@ -568,121 +498,59 @@ function App() {
           ref={buttons}
           style={modalbtn ? { opacity: 1 } : { opacity: 0 }}
         >
-          <button className="modalbtn" onClick={textmodalfnc}>
+          <button
+            className="modalbtn"
+            onClick={() =>
+              setInfoModal({
+                type: "text",
+                urls: content[activeHotspot.current]["text"],
+              })
+            }
+          >
             Text
           </button>
-          <button className="modalbtn" onClick={videomodalfnc}>
+          <button
+            className="modalbtn"
+            onClick={() =>
+              setInfoModal({
+                type: "video",
+                urls: content[activeHotspot.current]["video"],
+              })
+            }
+          >
             Video
           </button>
-          <button className="modalbtn" onClick={imagemodalfnc}>
+          <button
+            className="modalbtn"
+            onClick={() =>
+              setInfoModal({
+                type: "image",
+                urls: content[activeHotspot.current]["image"],
+              })
+            }
+          >
             Image
           </button>
-          <button className="modalbtn" onClick={pdfmodalfnc}>
+          <button
+            className="modalbtn"
+            onClick={() =>
+              setInfoModal({
+                type: "pdf",
+                urls: content[activeHotspot.current]["pdf"],
+              })
+            }
+          >
             PDF
           </button>
         </div>
 
-        {/* <div
-          id="video-container"
-          style={videomodal ? { display: "block" } : { display: "none" }}
-        >
-          {videoarr.map((v) => (
-            <video
-              className="individualvideo"
-              key={v.content_url}
-              src={v.content_url}
-              controls
-            ></video>
-          ))}
-        </div> */}
-
-        <div
-          id="video-container"
-          style={videomodal ? { display: "block" } : { display: "none" }}
-        >
-          <div className="carousel-wrapper">
-            <div className="feature-carousel-buttons">
-              <div
-                className="feature-carousel-left-btn"
-                onClick={previousSlide}
-              >
-                prev
-              </div>
-              <div className="feature-carousel-right-btn" onClick={nextSlide}>
-                next
-              </div>
-            </div>
-            <div className="slides">
-              {videoarr.map((videoSrc) => (
-                <video
-                  className="slide"
-                  src={videoSrc.content_url}
-                  controls
-                  width={1000}
-                ></video>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div
-          id="text-container"
-          style={textmodal ? { display: "block" } : { display: "none" }}
-        >
-          <Swiper
-            spaceBetween={10}
-            slidesPerView={1}
-            modules={[Navigation]}
-            navigation={{
-              nextEl: ".swiper-button-next-unique",
-              prevEl: ".swiper-button-prev-unique",
-            }}
-          >
-            {textarr.map((t) => (
-              <SwiperSlide>
-                <div>
-                  <h1 className="h1content">{t.content_url}</h1>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <div className="swiper-buttons-container">
-            <div className="swiper-button-prev-unique">prev</div>
-            <div className="swiper-button-next-unique">next</div>
-          </div>
-        </div>
-
-        <div
-          id="image-container"
-          style={imgmodal ? { display: "block" } : { display: "none" }}
-        >
-          <Swiper
-            spaceBetween={10}
-            slidesPerView={1}
-            modules={[Navigation]}
-            navigation={{
-              nextEl: ".swiper-button-next-unique",
-              prevEl: ".swiper-button-prev-unique",
-            }}
-          >
-            {imgarr.map((i) => (
-              <SwiperSlide>
-                <div>
-                  <img className="individualimage" src={i.content_url} />
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <div className="swiper-buttons-container">
-            <div className="swiper-button-prev-unique">prev</div>
-            <div className="swiper-button-next-unique">next</div>
-          </div>
-        </div>
-
-        <div
-          id="pdf-container"
-          style={pdfmodal ? { display: "block" } : { display: "none" }}
-        ></div>
+        {infoModal && (
+          <Carousel
+            onBackDropClick={backdropClickHandler}
+            type={infoModal.type}
+            urls={infoModal.urls}
+          />
+        )}
 
         <div id="backdrop" ref={backdropRef} onClick={reset}></div>
       </div>
