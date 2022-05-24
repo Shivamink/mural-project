@@ -1,5 +1,11 @@
-import { useState, useEffect, createRef } from "react";
-import axios from "axios";
+import { useState, useEffect, createRef, useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+// import "swiper/css/bundle";
+import { Autoplay, Navigation } from "swiper";
+// import { Document, Page } from "react-pdf";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
 
 import Ground from "./Assets/Ground.png";
 import Airport from "./Assets/Airport.png";
@@ -19,7 +25,7 @@ import SLBCbuilding from "./Assets/SL BC building.png";
 import SLRAgovernment from "./Assets/SLRA government.png";
 import SLRAhole from "./Assets/SLRA hole.png";
 import IMAbuilding from "./Assets/IM&A building.png";
-import TMTDrone from "./Assets/TMT Drone.png";
+import TMTDrone from "./Assets/Drone.webm";
 import TMTMovieposter from "./Assets/TMT Movie poster.png";
 import TMTStadium from "./Assets/TMT Stadium.png";
 import Mobileqr from "./Assets/Mobile qr.png";
@@ -42,6 +48,8 @@ import EnvironmentGovernance from "./Assets/Environment, Social and Governance.p
 import ESGtrees1 from "./Assets/ESG trees 1.png";
 import ESGTree2 from "./Assets/ESG Tree 2.png";
 import ESGtree3 from "./Assets/ESG tree 3.png";
+import Damwater from "./Assets/Dam water.webm";
+import Boat from "./Assets/Boat.webm";
 
 const completemap = {
   sector1: ["CMhospital", "EDTech"],
@@ -79,16 +87,59 @@ function App() {
   const [content, setContent] = useState([]);
   const [videoarr, setVideoarr] = useState([]);
   const [textarr, setTextarr] = useState([]);
+  const [imgarr, setImgarr] = useState([]);
+  const [pdfarr, setPdfarr] = useState([]);
   //Show hide content state
   const [modalbtn, setModalbtn] = useState(false);
   const [videomodal, setVideomodal] = useState(false);
   const [textmodal, setTextmodal] = useState(false);
+  const [imgmodal, setImgmodal] = useState(false);
+  const [pdfmodal, setPdfmodal] = useState(false);
+  //pdf state
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
 
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
   /**
    * @type{React.RefObject<HTMLDivElement>}
    */
   const backdropRef = createRef(null);
   let buttons = createRef(null);
+
+  useEffect(() => {}, []);
+
+  let currentSlide = 0;
+
+  let SlidesRef = useRef(null);
+
+  let businessSlides;
+
+  let gotoSlide = (n) => {
+    businessSlides = document.querySelectorAll(".slides slide");
+    businessSlides[currentSlide].className = "slide showing";
+    businessSlides[currentSlide].className = "slide";
+    currentSlide = (n + businessSlides.length) % businessSlides.length;
+    businessSlides[currentSlide].className = "slide showing";
+
+    for (let i = 0; i < businessSlides.length; i++) {
+      const element = businessSlides[i];
+      if (i > currentSlide && i <= businessSlides.length - 1) {
+        element.className = "slide next";
+      } else if (i < currentSlide && i >= 0) {
+        element.className = "slide previous";
+      }
+    }
+  };
+
+  const previousSlide = () => {
+    gotoSlide(currentSlide - 1);
+  };
+
+  const nextSlide = () => {
+    gotoSlide(currentSlide + 1);
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -165,6 +216,27 @@ function App() {
     video.map((v) => console.log(v.content_url, v.content_type));
     setVideoarr(video);
 
+    let valuess = content.filter(
+      (random) =>
+        random.content_type == "text" && random.hotspot_label == event.target.id
+    );
+    console.log(valuess, "gfhgfhgjhgj");
+    valuess.map((t) => console.log(t.content_url));
+    setTextarr(valuess);
+
+    let images = content.filter(
+      (img) =>
+        img.content_type == "image" && img.hotspot_label == event.target.id
+    );
+    images.map((i) => console.log(i.content_url));
+    setImgarr(images);
+
+    let pdfs = content.filter(
+      (pdf) => pdf.content_type == "pdf" && pdf.hotspot_label == event.target.id
+    );
+    pdfs.map((p) => console.log(p.content_url, "pdffffffffff"));
+    setPdfarr(pdfs);
+
     let itemval = document.getElementById(event.target.id);
     let itemin = itemval.getBoundingClientRect();
     console.log(itemin.top, itemin.left);
@@ -188,6 +260,14 @@ function App() {
     setTextmodal(true);
   }
 
+  function imagemodalfnc() {
+    setImgmodal(true);
+  }
+
+  function pdfmodalfnc() {
+    setPdfmodal(true);
+  }
+
   function reset() {
     const hostspots = document.getElementsByClassName("hotspot");
     for (let i = 0; i < hostspots.length; i++) {
@@ -207,6 +287,8 @@ function App() {
     setModalbtn(false);
     setVideomodal(false);
     setTextmodal(false);
+    setImgmodal(false);
+    setPdfmodal(false);
   }
 
   return (
@@ -239,12 +321,14 @@ function App() {
           src={Building3}
           onClick={individualitem}
         />
+
         <img
           className="hotspot IREbuilding-image"
           id="IREbuilding"
           src={IREbuildings}
           onClick={individualitem}
         />
+
         <img
           className="hotspot TMTbuilding-image"
           id="TMTbuilding"
@@ -287,12 +371,16 @@ function App() {
           src={SLBCcoal}
           onClick={individualitem}
         />
-        <img
-          className="hotspot IREdock-image"
-          id="IREdock"
-          src={IREdock}
-          onClick={individualitem}
-        />
+        <div>
+          <img
+            className="hotspot IREdock-image"
+            id="IREdock"
+            src={IREdock}
+            onClick={individualitem}
+          />
+          <video className="boat" src={Boat} autoPlay loop muted />
+        </div>
+
         <img
           className="hotspot SLBCbuilding-image"
           id="SLBCbuilding"
@@ -311,17 +399,21 @@ function App() {
           src={SLRAhole}
           onClick={individualitem}
         />
+        <video className="damwater" src={Damwater} autoPlay loop muted />
         <img
           className="hotspot IMAbuilding-image"
           id="IMAbuilding"
           src={IMAbuilding}
           onClick={individualitem}
         />
-        <img
+        <video
           className="hotspot TMTDrone-image"
           id="TMTDrone"
           src={TMTDrone}
           onClick={individualitem}
+          autoPlay
+          loop
+          muted
         />
         <img
           className="hotspot TMTMovieposter-image"
@@ -335,6 +427,7 @@ function App() {
           src={TMTMovieposter}
           onClick={individualitem}
         />
+
         <img
           className="hotspot TMTStadium-image"
           id="TMTStadium"
@@ -365,52 +458,53 @@ function App() {
           src={ESGtree3}
           onClick={individualitem}
         />
+
         <div id="primary">
           <button className="primary-btn" onClick={enablegroup}>
             <img
-              className="primary-btnimage"
+              className="primary-btnimage1"
               id="sector1"
               src={Consumermarkets}
             />
           </button>
           <button className="primary-btn" onClick={enablegroup}>
             <img
-              className="primary-btnimage"
+              className="primary-btnimage2"
               id="sector2"
               src={EnergyNatural}
             />
           </button>
           <button className="primary-btn" onClick={enablegroup}>
             <img
-              className="primary-btnimage"
+              className="primary-btnimage3"
               id="sector3"
               src={FinancialServices}
             />
           </button>
           <button className="primary-btn" onClick={enablegroup}>
             <img
-              className="primary-btnimage"
+              className="primary-btnimage4"
               id="sector4"
               src={GovernmentPublic}
             />
           </button>
           <button className="primary-btn" onClick={enablegroup}>
             <img
-              className="primary-btnimage"
+              className="primary-btnimage5"
               id="sector5"
               src={InfrastructureRealEstate}
             />
           </button>
           <button className="primary-btn" onClick={enablegroup}>
             <img
-              className="primary-btnimage"
+              className="primary-btnimage6"
               id="sector6"
               src={IndustrialManufacturingAuto}
             />
           </button>
           <button className="primary-btn" onClick={enablegroup}>
             <img
-              className="primary-btnimage"
+              className="primary-btnimage7"
               id="sector7"
               src={TechnologyMediatelecom}
             />
@@ -480,9 +574,15 @@ function App() {
           <button className="modalbtn" onClick={videomodalfnc}>
             Video
           </button>
-          <button className="modalbtn">PDF</button>
+          <button className="modalbtn" onClick={imagemodalfnc}>
+            Image
+          </button>
+          <button className="modalbtn" onClick={pdfmodalfnc}>
+            PDF
+          </button>
         </div>
-        <div
+
+        {/* <div
           id="video-container"
           style={videomodal ? { display: "block" } : { display: "none" }}
         >
@@ -494,11 +594,96 @@ function App() {
               controls
             ></video>
           ))}
+        </div> */}
+
+        <div
+          id="video-container"
+          style={videomodal ? { display: "block" } : { display: "none" }}
+        >
+          <div className="carousel-wrapper">
+            <div className="feature-carousel-buttons">
+              <div
+                className="feature-carousel-left-btn"
+                onClick={previousSlide}
+              >
+                prev
+              </div>
+              <div className="feature-carousel-right-btn" onClick={nextSlide}>
+                next
+              </div>
+            </div>
+            <div className="slides">
+              {videoarr.map((videoSrc) => (
+                <video
+                  className="slide"
+                  src={videoSrc.content_url}
+                  controls
+                  width={1000}
+                ></video>
+              ))}
+            </div>
+          </div>
         </div>
+
         <div
           id="text-container"
           style={textmodal ? { display: "block" } : { display: "none" }}
+        >
+          <Swiper
+            spaceBetween={10}
+            slidesPerView={1}
+            modules={[Navigation]}
+            navigation={{
+              nextEl: ".swiper-button-next-unique",
+              prevEl: ".swiper-button-prev-unique",
+            }}
+          >
+            {textarr.map((t) => (
+              <SwiperSlide>
+                <div>
+                  <h1 className="h1content">{t.content_url}</h1>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <div className="swiper-buttons-container">
+            <div className="swiper-button-prev-unique">prev</div>
+            <div className="swiper-button-next-unique">next</div>
+          </div>
+        </div>
+
+        <div
+          id="image-container"
+          style={imgmodal ? { display: "block" } : { display: "none" }}
+        >
+          <Swiper
+            spaceBetween={10}
+            slidesPerView={1}
+            modules={[Navigation]}
+            navigation={{
+              nextEl: ".swiper-button-next-unique",
+              prevEl: ".swiper-button-prev-unique",
+            }}
+          >
+            {imgarr.map((i) => (
+              <SwiperSlide>
+                <div>
+                  <img className="individualimage" src={i.content_url} />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <div className="swiper-buttons-container">
+            <div className="swiper-button-prev-unique">prev</div>
+            <div className="swiper-button-next-unique">next</div>
+          </div>
+        </div>
+
+        <div
+          id="pdf-container"
+          style={pdfmodal ? { display: "block" } : { display: "none" }}
         ></div>
+
         <div id="backdrop" ref={backdropRef} onClick={reset}></div>
       </div>
     </div>

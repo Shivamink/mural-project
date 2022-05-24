@@ -66,10 +66,10 @@
 }
 
 .CMmall-image {
-  width: 13%;
+  width: 9%;
   position: absolute;
   top: 47%;
-  left: 57%;
+  left: 59%;
 }
 
 .EDTech-image {
@@ -136,10 +136,10 @@
 }
 
 .TMTDrone-image {
-  width: 2%;
+  width: 4%;
   position: absolute;
-  top: 44%;
-  left: 61%;
+  top: 30%;
+  left: 60%;
 }
 
 .TMTMovieposter-image {
@@ -191,6 +191,19 @@
   left: 37%;
 }
 
+.damwater {
+  width: 8.4%;
+  position: absolute;
+  top: 0%;
+  left: 84%;
+}
+
+.boat {
+  width: 9%;
+  position: absolute;
+  top: 64%;
+}
+
 #backdrop {
   position: absolute;
   top: 0;
@@ -226,7 +239,7 @@
   flex-direction: column;
   margin: 15px;
   position: absolute;
-  top: 3%;
+  top: 2%;
   z-index: 1;
 }
 
@@ -238,17 +251,41 @@
   margin-bottom: 1vh;
 }
 
-.primary-btnimage {
-  width: 3.5vw;
-  height: 5vh;
+.primary-btnimage1 {
+  width: 3vw;
+}
+
+.primary-btnimage2 {
+  width: 2vw;
+}
+
+.primary-btnimage3 {
+  width: 2vw;
+}
+
+.primary-btnimage4 {
+  width: 2vw;
+}
+
+.primary-btnimage5 {
+  width: 2vw;
+  padding-top: 1vh;
+}
+
+.primary-btnimage6 {
+  width: 3vw;
+}
+
+.primary-btnimage7 {
+  width: 3vw;
 }
 
 #service {
   display: flex;
-  margin-right: 15px;
+  margin-right: 10px;
   position: absolute;
   z-index: 1;
-  top: 91%;
+  top: 89%;
   left: 0%;
 }
 
@@ -258,12 +295,13 @@
   border: none;
   background: transparent;
   margin-left: 1vw;
+  margin-right: 3vw;
 }
 
-.service-btnimage {
+/* .service-btnimage {
   width: 3.5vw;
   height: 3vh;
-}
+} */
 
 .modalbtns {
   display: flex;
@@ -273,8 +311,10 @@
 }
 
 .modalbtn {
-  width: 2vw;
-  height: 2vh;
+  /* width: 2vw;
+  height: 2vh; */
+  width: 100px;
+  height: 40px;
   margin: 3px;
 }
 
@@ -283,30 +323,102 @@
 }
 
 #video-container {
-  width: 20vw;
-  height: 60vh;
+  width: 65vw;
+  height: 61vh;
   overflow: scroll;
-  overflow-y: scroll;
   position: absolute;
   z-index: 1;
-  top: 10%;
-  left: 40%;
+  top: 15%;
+  left: 18%;
 }
 
 .individualvideo {
   width: 100%;
-  height: auto;
+  height: 20%;
 }
 
 #text-container {
-  width: 20vw;
-  height: 60vh;
+  width: 65vw;
+  height: 61vh;
   overflow: scroll;
-  overflow-y: scroll;
   position: absolute;
   z-index: 1;
   top: 10%;
-  left: 40%;
-  border: 1px solid red;
+  left: 18%;
   background-color: white;
+}
+
+.h1content {
+  font-family: "Times New Roman", Times, serif;
+  margin: 100px;
+}
+
+#image-container {
+  width: 65vw;
+  height: 80%;
+  overflow: hidden;
+  position: absolute;
+  z-index: 1;
+  top: 10%;
+  left: 18%;
+}
+
+.individualimage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#pdf-container {
+  width: 65vw;
+  height: 61vh;
+  overflow: scroll;
+  position: absolute;
+  z-index: 1;
+  /* top: 10%;
+  left: 18%; */
+  border: 1px solid red;
+}
+
+#infocard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 1vh;
+}
+
+.swiper-buttons-container {
+  z-index: 1;
+}
+
+.swiper-button-prev-unique {
+  color: #5499c7;
+  z-index: 1;
+  font-size: 100px;
+  position: absolute;
+  top: 34%;
+  left: 1%;
+}
+
+.swiper-button-next-unique {
+  color: #5499c7;
+  z-index: 1;
+  font-size: 100px;
+  position: absolute;
+  top: 34%;
+  left: 94%;
+}
+
+.slides {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.slide {
+  position: absolute;
+  width: 100%;
+  top: 0;
+}
+.slide.showing {
+  display: block;
 }
