@@ -39,10 +39,34 @@
   height: 100% !important;
 }
 
-.carousel-item > img,
+/* .carousel-item > img,
 video,
 .text-container,
 .pdf-container {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+} */
+
+.carousel-item > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.carousel-item > video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.carousel-item > .text-container {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.carousel-item > .pdf-container {
   width: 100%;
   height: 100%;
   object-fit: contain;

@@ -227,29 +227,17 @@ function App() {
         <img className="bg-image" src={Ground} />
         {/* <div className={isActive ? "backdrop" : ""}></div>
         <div className={isActive2 ? "backdrop2" : ""}></div> */}
-        <img
-          className="hotspot airport-image"
-          id="Airport"
-          src={Airport}
-          onClick={individualitem}
-        />
-        <img
-          className="hotspot building-image"
-          id="Building"
-          src={Building}
-          onClick={individualitem}
-        />
+        <img className="hotspot airport-image" id="Airport" src={Airport} />
+        <img className="hotspot building-image" id="Building" src={Building} />
         <img
           className="hotspot building2-image"
           id="Building2"
           src={Building2}
-          onClick={individualitem}
         />
         <img
           className="hotspot building3-image"
           id="Building3"
           src={Building3}
-          onClick={individualitem}
         />
 
         <img
@@ -275,7 +263,7 @@ function App() {
           className="hotspot CMmall-image"
           id="CMmall"
           src={CMmall}
-          onClick={individualitem}
+          // onClick={individualitem}
         />
         <img
           className="hotspot EDTech-image"
@@ -355,7 +343,6 @@ function App() {
           className="hotspot TMTMovieposter-image2"
           id="TMTMovieposter2"
           src={TMTMovieposter}
-          onClick={individualitem}
         />
 
         <img
@@ -370,18 +357,8 @@ function App() {
           src={Mobileqr}
           onClick={individualitem}
         />
-        <img
-          className="hotspot ESGtrees1"
-          id="ESGtrees1"
-          src={ESGtrees1}
-          onClick={individualitem}
-        />
-        <img
-          className="hotspot ESGTree2"
-          id="ESGTree2"
-          src={ESGTree2}
-          onClick={individualitem}
-        />
+        <img className="hotspot ESGtrees1" id="ESGtrees1" src={ESGtrees1} />
+        <img className="hotspot ESGTree2" id="ESGTree2" src={ESGTree2} />
         <img
           className="hotspot ESGtree3"
           id="ESGtree3"
@@ -493,6 +470,7 @@ function App() {
             />
           </button>
         </div>
+
         <div
           className="modalbtns"
           ref={buttons}
@@ -506,6 +484,10 @@ function App() {
                 urls: content[activeHotspot.current]["text"],
               })
             }
+            disabled={
+              activeHotspot.current &&
+              content[activeHotspot.current]["text"].length === 0
+            }
           >
             Text
           </button>
@@ -516,6 +498,10 @@ function App() {
                 type: "video",
                 urls: content[activeHotspot.current]["video"],
               })
+            }
+            disabled={
+              activeHotspot.current &&
+              content[activeHotspot.current]["video"].length === 0
             }
           >
             Video
@@ -528,6 +514,10 @@ function App() {
                 urls: content[activeHotspot.current]["image"],
               })
             }
+            disabled={
+              activeHotspot.current &&
+              content[activeHotspot.current]["image"].length === 0
+            }
           >
             Image
           </button>
@@ -538,6 +528,10 @@ function App() {
                 type: "pdf",
                 urls: content[activeHotspot.current]["pdf"],
               })
+            }
+            disabled={
+              activeHotspot.current &&
+              content[activeHotspot.current]["pdf"].length === 0
             }
           >
             PDF
