@@ -1,6 +1,6 @@
 import { useState, useEffect, createRef, useRef } from "react";
 import Carousel from "./Carousel.jsx";
-
+import "./Mural.css";
 //#region <Asset Imports>
 import Ground from "./Assets/Ground.png";
 import Airport from "./Assets/Airport.png";

@@ -299,9 +299,9 @@
 }
 
 /* .service-btnimage {
-  width: 3.5vw;
-  height: 3vh;
-} */
+    width: 3.5vw;
+    height: 3vh;
+  } */
 
 .modalbtns {
   display: flex;
@@ -312,7 +312,7 @@
 
 .modalbtn {
   /* width: 2vw;
-  height: 2vh; */
+    height: 2vh; */
   width: 100px;
   height: 40px;
   margin: 3px;
@@ -376,7 +376,7 @@
   position: absolute;
   z-index: 1;
   /* top: 10%;
-  left: 18%; */
+    left: 18%; */
   border: 1px solid red;
 }
 
