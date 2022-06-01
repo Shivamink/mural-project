@@ -1,6 +1,8 @@
 import { useState, useEffect, createRef, useRef } from "react";
 import Carousel from "./Carousel.jsx";
+import base64 from "base-64";
 import "./Mural.css";
+
 //#region <Asset Imports>
 import Ground from "./Assets/Ground.png";
 import Airport from "./Assets/Airport.png";
@@ -74,6 +76,9 @@ const completemap = {
   service9: [],
 };
 
+const USERNAME = "kpmg_mural";
+const PASSWORD = "password";
+
 function App() {
   const [activeGroup, setActiveGroup] = useState({ prev: null, current: null });
   const [activeHotspot, setActiveHotspot] = useState({
@@ -93,8 +98,25 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const authRes = await fetch(
+        "https://experientialetc.com/KPMG-test/jwt/jwtAuthorize.php",
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Basic " + base64.encode(USERNAME + ":" + PASSWORD),
+          },
+        }
+      );
+
+      const jwt = (await authRes.json()).key;
+
       const res = await fetch(
-        "https://experientialetc.com/KPMG-test/fetchMuralHotspotApi.php"
+        "https://experientialetc.com/KPMG-test/fetchMuralHotspotApi.php",
+        {
+          headers: {
+            Authorization: "Bearer " + jwt,
+          },
+        }
       );
       const json = await res.json();
       /**
@@ -369,9 +391,9 @@ function App() {
         <div id="primary">
           <button className="primary-btn" onClick={enablegroup}>
             <img
-              className="primary-btnimage1"
-              id="sector1"
-              src={Consumermarkets}
+              className="primary-btnimage7"
+              id="sector7"
+              src={TechnologyMediatelecom}
             />
           </button>
           <button className="primary-btn" onClick={enablegroup}>
@@ -379,6 +401,20 @@ function App() {
               className="primary-btnimage2"
               id="sector2"
               src={EnergyNatural}
+            />
+          </button>
+          <button className="primary-btn" onClick={enablegroup}>
+            <img
+              className="primary-btnimage5"
+              id="sector5"
+              src={InfrastructureRealEstate}
+            />
+          </button>
+          <button className="primary-btn" onClick={enablegroup}>
+            <img
+              className="primary-btnimage1"
+              id="sector1"
+              src={Consumermarkets}
             />
           </button>
           <button className="primary-btn" onClick={enablegroup}>
@@ -397,26 +433,13 @@ function App() {
           </button>
           <button className="primary-btn" onClick={enablegroup}>
             <img
-              className="primary-btnimage5"
-              id="sector5"
-              src={InfrastructureRealEstate}
-            />
-          </button>
-          <button className="primary-btn" onClick={enablegroup}>
-            <img
               className="primary-btnimage6"
               id="sector6"
               src={IndustrialManufacturingAuto}
             />
           </button>
-          <button className="primary-btn" onClick={enablegroup}>
-            <img
-              className="primary-btnimage7"
-              id="sector7"
-              src={TechnologyMediatelecom}
-            />
-          </button>
         </div>
+
         <div id="service">
           <button className="service-btn" onClick={enablegroup}>
             <img src={Services} className="service-btnimage" id="service1" />
