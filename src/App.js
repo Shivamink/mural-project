@@ -525,7 +525,7 @@ function App() {
                 urls: content[activeHotspot.current]["text"],
               })
             }
-            disabled={
+            hidden={
               activeHotspot.current &&
               content[activeHotspot.current]["text"].length === 0
             }
@@ -540,7 +540,7 @@ function App() {
                 urls: content[activeHotspot.current]["video"],
               })
             }
-            disabled={
+            hidden={
               activeHotspot.current &&
               content[activeHotspot.current]["video"].length === 0
             }
@@ -555,7 +555,7 @@ function App() {
                 urls: content[activeHotspot.current]["image"],
               })
             }
-            disabled={
+            hidden={
               activeHotspot.current &&
               content[activeHotspot.current]["image"].length === 0
             }
@@ -570,7 +570,7 @@ function App() {
                 urls: content[activeHotspot.current]["pdf"],
               })
             }
-            disabled={
+            hidden={
               activeHotspot.current &&
               content[activeHotspot.current]["pdf"].length === 0
             }
