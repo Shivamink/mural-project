@@ -3,9 +3,17 @@ import Carousel from "react-bootstrap/Carousel";
 import PdfViewer from "./PdfViewer";
 import "./Carousel.css";
 
-function MyCarousel({ onBackDropClick, type, urls }) {
+function MyCarousel({ onBackDropClick, type, urls, itemTop, itemLeft }) {
   useEffect(() => {
-    console.log({ type, urls });
+    console.log({ type, urls, itemTop, itemLeft });
+    console.log(itemTop, itemLeft);
+    if (itemTop > 700) {
+      document.getElementById("my-carousel").style.top = `${itemTop}px`;
+      document.getElementById("my-carousel").style.left = `${itemLeft + 500}px`;
+    } else {
+      document.getElementById("my-carousel").style.top = `${itemTop + 200}px`;
+      document.getElementById("my-carousel").style.left = `${itemLeft + 500}px`;
+    }
   }, []);
 
   return (
@@ -23,7 +31,7 @@ function MyCarousel({ onBackDropClick, type, urls }) {
                 <div className="text-container">{url}</div>
               )}
               {type === "pdf" && <PdfViewer url={url} />}
-              <Carousel.Caption>Test-1</Carousel.Caption>
+              {/* <Carousel.Caption>Test-1</Carousel.Caption> */}
             </Carousel.Item>
           ))}
         </Carousel>

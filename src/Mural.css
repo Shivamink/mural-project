@@ -422,3 +422,19 @@
 .slide.showing {
   display: block;
 }
+
+.F {
+  top: 0;
+  left: 50%;
+  z-index: 1;
+}
+
+.E {
+  width: 178px;
+  height: 1080px;
+  padding-top: 35vh;
+}
+
+.E button {
+  margin-left: 0;
+}

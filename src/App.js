@@ -1,5 +1,6 @@
 import { useState, useEffect, createRef, useRef } from "react";
 import Carousel from "./Carousel.jsx";
+import Navigation from "./Navigation.jsx";
 import base64 from "base-64";
 import "./Mural.css";
 
@@ -78,6 +79,8 @@ const completemap = {
 
 const USERNAME = "kpmg_mural";
 const PASSWORD = "password";
+let itemTop = null;
+let itemLeft = null;
 
 function App() {
   const [activeGroup, setActiveGroup] = useState({ prev: null, current: null });
@@ -98,21 +101,33 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const authRes = await fetch(
-        "https://experientialetc.com/KPMG-test/jwt/jwtAuthorize.php",
-        {
-          method: "POST",
-          headers: {
-            Authorization: "Basic " + base64.encode(USERNAME + ":" + PASSWORD),
-          },
-        }
-      );
+      let jwt = localStorage.getItem("mural_jwt");
+      const exp = jwt
+        ? parseInt(JSON.parse(base64.decode(jwt.split(".")[1])).exp)
+        : 0;
 
-      const jwt = (await authRes.json()).key;
+      // console.log({ jwt, exp });
+
+      if (!(parseInt((Date.now() / 1000).toFixed(0)) < exp)) {
+        const fd = new FormData();
+        fd.append("user", USERNAME);
+        fd.append("pass", PASSWORD);
+
+        const authRes = await fetch(
+          "https://experientialetc.com/KPMG-test/jwt/jwtAuthorize.php",
+          {
+            method: "POST",
+            body: fd,
+          }
+        );
+        jwt = (await authRes.json()).key;
+        localStorage.setItem("mural_jwt", jwt);
+      }
 
       const res = await fetch(
         "https://experientialetc.com/KPMG-test/fetchMuralHotspotApi.php",
         {
+          method: "POST",
           headers: {
             Authorization: "Bearer " + jwt,
           },
@@ -207,6 +222,9 @@ function App() {
 
     let itemval = document.getElementById(event.target.id);
     let itemin = itemval.getBoundingClientRect();
+    itemTop = itemin.top;
+    itemLeft = itemin.left;
+    console.log(itemTop);
     console.log(itemin.top, itemin.left);
     let button = buttons.current;
 
@@ -385,7 +403,7 @@ function App() {
           className="hotspot ESGtree3"
           id="ESGtree3"
           src={ESGtree3}
-          onClick={individualitem}
+          // onClick={individualitem}
         />
 
         <div id="primary">
@@ -566,9 +584,11 @@ function App() {
             onBackDropClick={backdropClickHandler}
             type={infoModal.type}
             urls={infoModal.urls}
+            itemTop={itemTop}
+            itemLeft={itemLeft}
           />
         )}
-
+        <Navigation />
         <div id="backdrop" ref={backdropRef} onClick={reset}></div>
       </div>
     </div>
