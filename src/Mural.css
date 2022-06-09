@@ -438,3 +438,42 @@
 .E button {
   margin-left: 0;
 }
+
+.Highlightbtn {
+  border: none;
+  background-color: blue;
+  color: white;
+  margin: 5px;
+  width: 5vw;
+  height: 4vh;
+}
+
+#Sectorlist {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 1;
+}
+
+#Servicelist {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 1;
+}
+
+#subpart {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 1;
+}
+
+.Highlightsubpart {
+  border: none;
+  background-color: blue;
+  color: white;
+  margin: 5px;
+  width: 5vw;
+  height: 4vh;
+}

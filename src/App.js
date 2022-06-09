@@ -91,6 +91,8 @@ function App() {
   const [content, setContent] = useState({});
   //Show hide content state
   const [modalbtn, setModalbtn] = useState(false);
+  const [showlist, setShowlist] = useState(false); //shows list of sector and services
+  const [showsub, Setshowsub] = useState(false); //shows sub part of sector or service
   const [infoModal, setInfoModal] = useState(null);
 
   /**
@@ -207,6 +209,11 @@ function App() {
 
   function enablegroup(event) {
     console.log("Clicked on Group: ", event.target.id);
+    if (event.target.id.indexOf("sector") > -1) {
+      console.log("Sector");
+    } else if (event.target.id.indexOf("service") > -1) {
+      console.log("Service");
+    }
     setActiveGroup((state) => ({
       prev: state.current,
       current: event.target.id,
@@ -220,6 +227,8 @@ function App() {
       current: event.target.id,
     }));
 
+    setShowlist(true);
+
     let itemval = document.getElementById(event.target.id);
     let itemin = itemval.getBoundingClientRect();
     itemTop = itemin.top;
@@ -229,12 +238,37 @@ function App() {
     let button = buttons.current;
 
     button.style.top = `${itemin.top.toFixed()}px`;
-    button.style.left = `${itemin.left.toFixed() - 200}px`;
+    button.style.left = `${itemin.left + 790}px`;
+
+    let Sectorlist = document.getElementById("Sectorlist");
+    Sectorlist.style.top = `${itemin.top.toFixed()}px`;
+    Sectorlist.style.left = `${itemin.left.toFixed() - 300}px`;
+
+    let Servicelist = document.getElementById("Servicelist");
+    Servicelist.style.top = `${itemin.top.toFixed()}px`;
+    Servicelist.style.left = `${itemin.left + 150}px`;
+
+    let Subpart = document.getElementById("subpart");
+    Subpart.style.top = `${itemin.top.toFixed()}px`;
+    Subpart.style.left = `${itemin.left + 470}px`;
+
     if (itemin.left == 0 || itemin.top == 259.1964416503906) {
-      console.log("fix");
       button.style.top = `${500}px`;
-      button.style.left = `${1000}px`;
+      button.style.left = `${1500}px`;
+      Sectorlist.style.top = `${500}px`;
+      Sectorlist.style.left = `${500}px`;
+      Servicelist.style.top = `${500}px`;
+      Servicelist.style.left = `${900}px`;
+      Subpart.style.top = `${500}px`;
+      Subpart.style.left = `${1200}px`;
     }
+  }
+
+  function showsubservice() {
+    Setshowsub(true);
+  }
+
+  function showmainbtn() {
     setModalbtn(true);
   }
 
@@ -254,6 +288,8 @@ function App() {
     }));
 
     setModalbtn(false);
+    setShowlist(false);
+    Setshowsub(false);
   }
 
   const backdropClickHandler = () => {
@@ -515,7 +551,7 @@ function App() {
         <div
           className="modalbtns"
           ref={buttons}
-          style={modalbtn ? { opacity: 1 } : { opacity: 0 }}
+          style={modalbtn ? { display: "flex" } : { display: "none" }}
         >
           <button
             className="modalbtn"
@@ -576,6 +612,50 @@ function App() {
             }
           >
             PDF
+          </button>
+        </div>
+
+        <div style={showlist ? { display: "block" } : { display: "none" }}>
+          <div id="Sectorlist">
+            <button className="Highlightbtn" onClick={showsubservice}>
+              Business Consulting
+            </button>
+            <button className="Highlightbtn" onClick={showsubservice}>
+              Digital Trust-Cyber
+            </button>
+            <button className="Highlightbtn" onClick={showsubservice}>
+              Tax
+            </button>
+            <button className="Highlightbtn" onClick={showsubservice}>
+              Managed Service
+            </button>
+          </div>
+
+          <div id="Servicelist">
+            <button className="Highlightbtn" onClick={showsubservice}>
+              TMT
+            </button>
+            <button className="Highlightbtn" onClick={showsubservice}>
+              Consumer
+            </button>
+            <button className="Highlightbtn" onClick={showsubservice}>
+              Energy & Natural Resources
+            </button>
+          </div>
+        </div>
+
+        <div
+          id="subpart"
+          style={showsub ? { display: "flex" } : { display: "none" }}
+        >
+          <button className="Highlightsubpart" onClick={showmainbtn}>
+            5g Capability
+          </button>
+          <button className="Highlightsubpart" onClick={showmainbtn}>
+            Passive infra Capability
+          </button>
+          <button className="Highlightsubpart" onClick={showmainbtn}>
+            Drone-EAM
           </button>
         </div>
 
