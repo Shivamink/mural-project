@@ -198,6 +198,18 @@
   left: 84%;
 }
 
+.fire1 {
+  position: absolute;
+  top: 26%;
+  left: 18.2%;
+}
+
+.fire2 {
+  position: absolute;
+  top: 26%;
+  left: 19.6%;
+}
+
 .boat {
   width: 9%;
   position: absolute;
@@ -476,4 +488,14 @@
   margin: 5px;
   width: 5vw;
   height: 4vh;
+}
+
+#fixserviceanimation {
+  transition: 1s all ease;
+  transform: translateX(0%);
+}
+
+#serviceanimation {
+  transition: 1s all ease;
+  transform: translateX(-150%);
 }

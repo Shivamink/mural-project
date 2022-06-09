@@ -48,6 +48,7 @@ import ESGTree2 from "./Assets/ESG Tree 2.png";
 import ESGtree3 from "./Assets/ESG tree 3.png";
 import Damwater from "./Assets/Dam water.webm";
 import Boat from "./Assets/Boat.webm";
+import fire from "./Assets/fire2.webm";
 //#endregion
 
 const completemap = {
@@ -81,6 +82,7 @@ const USERNAME = "kpmg_mural";
 const PASSWORD = "password";
 let itemTop = null;
 let itemLeft = null;
+let group = false;
 
 function App() {
   const [activeGroup, setActiveGroup] = useState({ prev: null, current: null });
@@ -94,6 +96,7 @@ function App() {
   const [showlist, setShowlist] = useState(false); //shows list of sector and services
   const [showsub, Setshowsub] = useState(false); //shows sub part of sector or service
   const [infoModal, setInfoModal] = useState(null);
+  const [animation, Setanimation] = useState(false);
 
   /**
    * @type{React.RefObject<HTMLDivElement>}
@@ -208,11 +211,14 @@ function App() {
   }, [activeHotspot]);
 
   function enablegroup(event) {
+    Setanimation(!animation);
     console.log("Clicked on Group: ", event.target.id);
-    if (event.target.id.indexOf("sector") > -1) {
-      console.log("Sector");
-    } else if (event.target.id.indexOf("service") > -1) {
-      console.log("Service");
+    if (
+      event.target.id.indexOf("sector") > -1 ||
+      event.target.id.indexOf("service") > -1
+    ) {
+      group = true;
+      console.log(group);
     }
     setActiveGroup((state) => ({
       prev: state.current,
@@ -227,7 +233,12 @@ function App() {
       current: event.target.id,
     }));
 
-    setShowlist(true);
+    if (group) {
+      setShowlist(false);
+      Setshowsub(true);
+    } else {
+      setShowlist(true);
+    }
 
     let itemval = document.getElementById(event.target.id);
     let itemin = itemval.getBoundingClientRect();
@@ -262,6 +273,11 @@ function App() {
       Subpart.style.top = `${500}px`;
       Subpart.style.left = `${1200}px`;
     }
+
+    if (group) {
+      Subpart.style.left = `${itemin.left + 150}px`;
+      button.style.left = `${itemin.left + 450}px`;
+    }
   }
 
   function showsubservice() {
@@ -290,6 +306,7 @@ function App() {
     setModalbtn(false);
     setShowlist(false);
     Setshowsub(false);
+    group = false;
   }
 
   const backdropClickHandler = () => {
@@ -394,6 +411,8 @@ function App() {
           onClick={individualitem}
         />
         <video className="damwater" src={Damwater} autoPlay loop muted />
+        <video className="fire1" src={fire} autoPlay loop muted />
+        <video className="fire2" src={fire} autoPlay loop muted />
         <img
           className="hotspot IMAbuilding-image"
           id="IMAbuilding"
@@ -498,54 +517,56 @@ function App() {
           <button className="service-btn" onClick={enablegroup}>
             <img src={Services} className="service-btnimage" id="service1" />
           </button>
-          <button className="service-btn" onClick={enablegroup}>
-            <img
-              src={BusinessConsulting}
-              className="service-btnimage"
-              id="service2"
-            />
-          </button>
-          <button className="service-btn" onClick={enablegroup}>
-            <img
-              src={DigitalTrustCyber}
-              className="service-btnimage"
-              id="service3"
-            />
-          </button>
-          <button className="service-btn" onClick={enablegroup}>
-            <img
-              src={RiskAdvisory}
-              className="service-btnimage"
-              id="service4"
-            />
-          </button>
-          <button className="service-btn" onClick={enablegroup}>
-            <img
-              src={TechEnablement}
-              className="service-btnimage"
-              id="service5"
-            />
-          </button>
-          <button className="service-btn" onClick={enablegroup}>
-            <img src={OneMA} className="service-btnimage" id="service6" />
-          </button>
-          <button className="service-btn" onClick={enablegroup}>
-            <img
-              src={ManagedServices}
-              className="service-btnimage"
-              id="service7"
-            />
-          </button>
-          <button className="service-btn" onClick={enablegroup}>
-            <img src={Tax} className="service-btnimage" id="service8" />
-          </button>
-          <button className="service-btn" onClick={enablegroup}>
-            <img
-              src={EnvironmentGovernance}
-              className="service-btnimage"
-              id="service9"
-            />
-          </button>
+          <div id={animation ? "fixserviceanimation" : "serviceanimation"}>
+            <button className="service-btn" onClick={enablegroup}>
+              <img
+                src={BusinessConsulting}
+                className="service-btnimage"
+                id="service2"
+              />
+            </button>
+            <button className="service-btn" onClick={enablegroup}>
+              <img
+                src={DigitalTrustCyber}
+                className="service-btnimage"
+                id="service3"
+              />
+            </button>
+            <button className="service-btn" onClick={enablegroup}>
+              <img
+                src={RiskAdvisory}
+                className="service-btnimage"
+                id="service4"
+              />
+            </button>
+            <button className="service-btn" onClick={enablegroup}>
+              <img
+                src={TechEnablement}
+                className="service-btnimage"
+                id="service5"
+              />
+            </button>
+            <button className="service-btn" onClick={enablegroup}>
+              <img src={OneMA} className="service-btnimage" id="service6" />
+            </button>
+            <button className="service-btn" onClick={enablegroup}>
+              <img
+                src={ManagedServices}
+                className="service-btnimage"
+                id="service7"
+              />
+            </button>
+            <button className="service-btn" onClick={enablegroup}>
+              <img src={Tax} className="service-btnimage" id="service8" />
+            </button>
+            <button className="service-btn" onClick={enablegroup}>
+              <img
+                src={EnvironmentGovernance}
+                className="service-btnimage"
+                id="service9"
+              />
+            </button>
+          </div>
         </div>
 
         <div
