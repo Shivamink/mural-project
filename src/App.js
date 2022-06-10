@@ -49,6 +49,9 @@ import ESGtree3 from "./Assets/ESG tree 3.png";
 import Damwater from "./Assets/Dam water.webm";
 import Boat from "./Assets/Boat.webm";
 import fire from "./Assets/fire2.webm";
+import imageIcon from "./Assets/imageIcon.png";
+import pptIcon from "./Assets/pptIcon.png";
+import pdfIcon from "./Assets/pdfIcon.png";
 //#endregion
 
 const completemap = {
@@ -67,10 +70,10 @@ const completemap = {
     "TMTDrone",
     "TMTMovieposter",
   ],
-  service1: ["SLBCcoal", "SLBCbuilding", "Mobileqr"],
-  service2: ["Mobileqr"],
-  service3: ["SLRAhole", "SLRAgovernment"],
-  service4: [],
+  service1: [],
+  service2: ["SLBCcoal", "SLBCbuilding", "Mobileqr"],
+  service3: ["Mobileqr"],
+  service4: ["SLRAhole", "SLRAgovernment"],
   service5: [],
   service6: [],
   service7: [],
@@ -211,7 +214,6 @@ function App() {
   }, [activeHotspot]);
 
   function enablegroup(event) {
-    Setanimation(!animation);
     console.log("Clicked on Group: ", event.target.id);
     if (
       event.target.id.indexOf("sector") > -1 ||
@@ -224,6 +226,10 @@ function App() {
       prev: state.current,
       current: event.target.id,
     }));
+  }
+
+  function getanimation() {
+    Setanimation(!animation);
   }
 
   function individualitem(event) {
@@ -514,7 +520,7 @@ function App() {
         </div>
 
         <div id="service">
-          <button className="service-btn" onClick={enablegroup}>
+          <button className="service-btnmain" onClick={getanimation}>
             <img src={Services} className="service-btnimage" id="service1" />
           </button>
           <div id={animation ? "fixserviceanimation" : "serviceanimation"}>
@@ -587,23 +593,11 @@ function App() {
               content[activeHotspot.current]["text"].length === 0
             }
           >
-            Text
+            <div id="btnicon-container">
+              <img src={pptIcon} className="btnicon" />
+            </div>
           </button>
-          <button
-            className="modalbtn"
-            onClick={() =>
-              setInfoModal({
-                type: "video",
-                urls: content[activeHotspot.current]["video"],
-              })
-            }
-            hidden={
-              activeHotspot.current &&
-              content[activeHotspot.current]["video"].length === 0
-            }
-          >
-            Video
-          </button>
+
           <button
             className="modalbtn"
             onClick={() =>
@@ -617,7 +611,9 @@ function App() {
               content[activeHotspot.current]["image"].length === 0
             }
           >
-            Image
+            <div id="btnicon-container">
+              <img src={imageIcon} className="btnicon" />
+            </div>
           </button>
           <button
             className="modalbtn"
@@ -632,7 +628,32 @@ function App() {
               content[activeHotspot.current]["pdf"].length === 0
             }
           >
-            PDF
+            <div id="btnicon-container">
+              <img src={pdfIcon} className="btnicon" />
+            </div>
+          </button>
+          <button
+            className="modalbtn"
+            onClick={() =>
+              setInfoModal({
+                type: "video",
+                urls: content[activeHotspot.current]["video"],
+              })
+            }
+            hidden={
+              activeHotspot.current &&
+              content[activeHotspot.current]["video"].length === 0
+            }
+          >
+            <div id="videoicon-container">
+              <video
+                className="videoicon"
+                src="https://experientialetc.com/KPMG-test/assets/sectors/consumer%20markets/Life%20Sciences%20Offering%20Solution%20(LS-H).mp4"
+                autoPlay
+                loop
+                muted
+              />
+            </div>
           </button>
         </div>
 
